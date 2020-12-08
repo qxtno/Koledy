@@ -14,12 +14,13 @@ import java.util.ArrayList;
 import io.qxtno.carols.R;
 import io.qxtno.carols.model.Carol;
 
-public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHolder> {
+public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHolder>{
 
     private final Context context;
     private final ArrayList<Carol> carols;
+    private final ArrayList<Carol> carolsBackup;
+    private final ArrayList<Carol> filteredList = new ArrayList<>();
     private OnItemClickListener onItemClickListener;
-
 
     public interface OnItemClickListener {
         void onItemClick(int position);
@@ -32,6 +33,7 @@ public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHol
     public CarolAdapter(Context context, ArrayList<Carol> carols) {
         this.context = context;
         this.carols = carols;
+        carolsBackup = new ArrayList<>(carols);
     }
 
     @NonNull
@@ -66,5 +68,21 @@ public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHol
                 }
             });
         }
+    }
+    public void filter(String text){
+        filteredList.clear();
+        if(text.isEmpty()){
+            filteredList.addAll(carolsBackup);
+        }else {
+            text = text.toLowerCase();
+            for(Carol carol : carolsBackup){
+                if(carol.getTitle().toLowerCase().contains(text)){
+                    filteredList.add(carol);
+                }
+            }
+        }
+        carols.clear();
+        carols.addAll(filteredList);
+        notifyDataSetChanged();
     }
 }
