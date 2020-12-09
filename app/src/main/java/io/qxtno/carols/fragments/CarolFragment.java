@@ -5,7 +5,6 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.Animation;
@@ -16,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -27,7 +27,6 @@ import io.qxtno.carols.R;
 import io.qxtno.carols.model.Carol;
 
 public class CarolFragment extends Fragment {
-    private Carol carol;
     private FloatingActionButton sizeFab;
     private ExtendedFloatingActionButton increaseFab;
     private ExtendedFloatingActionButton restoreFab;
@@ -36,17 +35,6 @@ public class CarolFragment extends Fragment {
     private float size;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
-
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        Bundle bundle = this.getArguments();
-        assert bundle != null;
-        carol = bundle.getParcelable("carol");
-
-        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(carol.getTitle());
-    }
 
     @Nullable
     @Override
@@ -58,9 +46,14 @@ public class CarolFragment extends Fragment {
 
         TextView carolText = view.findViewById(R.id.carol_text);
 
-        sharedPreferences = requireActivity().getPreferences(Context.MODE_PRIVATE);
+        Bundle bundle = this.getArguments();
+        assert bundle != null;
+        Carol carol = bundle.getParcelable("carol");
+
+        Objects.requireNonNull(((MainActivity) requireActivity()).getSupportActionBar()).setTitle(carol.getTitle());
+
+        sharedPreferences = requireActivity().getSharedPreferences("mode", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        editor.putFloat("size", carolText.getTextSize());
         size = sharedPreferences.getFloat("size", 18);
 
         carolText.setText(carol.getCarol_text());
@@ -110,11 +103,16 @@ public class CarolFragment extends Fragment {
         });
 
         restoreFab.setOnClickListener(v -> {
-            size = 18;
-            carolText.setTextSize(size);
-            editor = sharedPreferences.edit();
-            editor.putFloat("size", size).apply();
-            Toast.makeText(requireContext(), R.string.toast_reset_done, Toast.LENGTH_SHORT).show();
+            float defaultSize = 18;
+            if (size != defaultSize) {
+                carolText.setTextSize(defaultSize);
+                editor = sharedPreferences.edit();
+                editor.putFloat("size", defaultSize).apply();
+                Toast.makeText(requireContext(), R.string.toast_reset_done, Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(requireContext(), R.string.toast_size_unchanged, Toast.LENGTH_SHORT).show();
+            }
+
         });
 
         decreaseFab.setOnClickListener(v -> {
@@ -139,10 +137,14 @@ public class CarolFragment extends Fragment {
     }
 
     @Override
-    public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
-        super.onCreateOptionsMenu(menu, inflater);
-        menu.clear();
-        inflater.inflate(R.menu.carol_menu, menu);
+    public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.menu_search).setVisible(false).collapseActionView();
+        menu.findItem(R.id.menu_settings).setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_settings);
+            return true;
+        });
     }
 
     private void animationOut() {

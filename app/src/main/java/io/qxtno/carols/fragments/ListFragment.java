@@ -1,7 +1,6 @@
 package io.qxtno.carols.fragments;
 
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -82,6 +81,8 @@ public class ListFragment extends Fragment implements CarolAdapter.OnItemClickLi
 
     @Override
     public void onPrepareOptionsMenu(@NonNull Menu menu) {
+        super.onPrepareOptionsMenu(menu);
+
         MenuItem searchItem = menu.findItem(R.id.menu_search);
         searchView = (androidx.appcompat.widget.SearchView) searchItem.getActionView();
         searchView.setIconified(true);
@@ -104,7 +105,11 @@ public class ListFragment extends Fragment implements CarolAdapter.OnItemClickLi
                 return true;
             }
         });
-        super.onPrepareOptionsMenu(menu);
+
+        menu.findItem(R.id.menu_settings).setOnMenuItemClickListener(item -> {
+            Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_settings);
+            return true;
+        });
     }
 
     @Override
