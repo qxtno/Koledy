@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Kolędy</string>
     <string name="search">Szukaj</string>
+    <string name="size">Rozmiar czcionki</string>
+    <string name="increase">Zwiększ rozmiar czcionki</string>
+    <string name="restore">Przywróć domyślny rozmiar</string>
+    <string name="decrease">Zmniejsz rozmiar czcionki</string>
+    <string name="close">Zamknij</string>
+    <string name="toast_too_big">Nie można już zwiększyć rozmiaru czcionki</string>
+    <string name="toast_too_small">Nie można już zmniejszyć rozmiaru czcionki</string>
+    <string name="toast_reset_done">Przywrócono rozmiar czcionki</string>
 </resources>
