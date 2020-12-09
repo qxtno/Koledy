@@ -86,7 +86,7 @@ public class ListFragment extends Fragment implements CarolAdapter.OnItemClickLi
         searchView = (androidx.appcompat.widget.SearchView) searchItem.getActionView();
         searchView.setIconified(true);
 
-        if (!TextUtils.isEmpty(searchString)) {
+        if (searchString != null && !searchString.isEmpty()) {
             searchItem.expandActionView();
             searchView.setQuery(searchString, true);
         }
@@ -110,7 +110,9 @@ public class ListFragment extends Fragment implements CarolAdapter.OnItemClickLi
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        searchString = searchView.getQuery().toString();
-        outState.putString("search", searchString);
+        if (searchView != null) {
+            searchString = searchView.getQuery().toString();
+            outState.putString("search", searchString);
+        }
     }
 }
