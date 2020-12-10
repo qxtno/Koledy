@@ -11,11 +11,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import io.qxtno.carols.R;
 
@@ -24,6 +27,8 @@ public class SettingsFragment extends Fragment {
     private RadioButton lightRadio;
     private RadioButton darkRadio;
     private RadioButton systemRadio;
+    private SwitchMaterial scaleSwitch;
+    private TextView themeText;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -36,10 +41,14 @@ public class SettingsFragment extends Fragment {
         lightRadio = view.findViewById(R.id.radio_light);
         darkRadio = view.findViewById(R.id.radio_dark);
         systemRadio = view.findViewById(R.id.radio_system);
+        scaleSwitch = view.findViewById(R.id.scale_switch);
+        themeText = view.findViewById(R.id.theme_text);
 
         sharedPreferences = requireActivity().getSharedPreferences("mode", Context.MODE_PRIVATE);
 
         themeHandler();
+        scaleHandler();
+        sizeChanger();
 
         setHasOptionsMenu(true);
 
@@ -94,5 +103,43 @@ public class SettingsFragment extends Fragment {
                     break;
             }
         });
+    }
+
+    private void scaleHandler() {
+        boolean large = sharedPreferences.getBoolean("scaleLarge", false);
+        if (large) {
+            scaleSwitch.setChecked(true);
+            scaleSwitch.setText(R.string.scale_normal);
+        }
+        scaleSwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            editor = sharedPreferences.edit();
+            if (isChecked) {
+                editor.putFloat("scaleSize", 25)
+                        .putBoolean("scaleLarge", true)
+                        .apply();
+                scaleSwitch.setText(R.string.scale_normal);
+            } else {
+                editor.putFloat("scaleSize", 18)
+                        .putBoolean("scaleLarge", false)
+                        .apply();
+                scaleSwitch.setText(R.string.scale_large);
+            }
+            sizeChanger();
+            editor.putBoolean("scaleChanged", true).apply();
+        });
+    }
+
+    private void sizeChanger() {
+        float size;
+        if (sharedPreferences.getBoolean("scaleLarge", false)) {
+            size = 20;
+        } else {
+            size = 15;
+        }
+        themeText.setTextSize(size);
+        lightRadio.setTextSize(size);
+        darkRadio.setTextSize(size);
+        systemRadio.setTextSize(size);
+        scaleSwitch.setTextSize(size);
     }
 }

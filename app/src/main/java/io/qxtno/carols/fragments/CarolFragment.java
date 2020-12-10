@@ -33,8 +33,10 @@ public class CarolFragment extends Fragment {
     private ExtendedFloatingActionButton decreaseFab;
     private boolean toggleFloatingButtons = false;
     private float size;
+    private float defaultSize;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
+    private TextView carolText;
 
     @Nullable
     @Override
@@ -44,7 +46,7 @@ public class CarolFragment extends Fragment {
 
         setHasOptionsMenu(true);
 
-        TextView carolText = view.findViewById(R.id.carol_text);
+        carolText = view.findViewById(R.id.carol_text);
 
         Bundle bundle = this.getArguments();
         assert bundle != null;
@@ -63,6 +65,8 @@ public class CarolFragment extends Fragment {
         increaseFab = view.findViewById(R.id.increase_fab);
         restoreFab = view.findViewById(R.id.restore_fab);
         decreaseFab = view.findViewById(R.id.decrease_fab);
+
+        sizeChanger();
 
         bringToFront();
 
@@ -88,14 +92,13 @@ public class CarolFragment extends Fragment {
             }
         });
 
-        size = sharedPreferences.getFloat("size", size);
-
         increaseFab.setOnClickListener(v -> {
+            size = sharedPreferences.getFloat("scaleSize", size);
             if (size < 50) {
                 size++;
                 carolText.setTextSize(size);
                 editor = sharedPreferences.edit();
-                editor.putFloat("size", size).apply();
+                editor.putFloat("scaleSize", size).apply();
             } else {
                 Toast.makeText(requireContext(), R.string.toast_too_big, Toast.LENGTH_SHORT).show();
             }
@@ -103,11 +106,16 @@ public class CarolFragment extends Fragment {
         });
 
         restoreFab.setOnClickListener(v -> {
-            float defaultSize = 18;
+            size = sharedPreferences.getFloat("scaleSize", size);
+            if (sharedPreferences.getBoolean("scaleLarge", false)) {
+                defaultSize = 25;
+            } else {
+                defaultSize = 18;
+            }
             if (size != defaultSize) {
                 carolText.setTextSize(defaultSize);
                 editor = sharedPreferences.edit();
-                editor.putFloat("size", defaultSize).apply();
+                editor.putFloat("scaleSize", defaultSize).apply();
                 Toast.makeText(requireContext(), R.string.toast_reset_done, Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(requireContext(), R.string.toast_size_unchanged, Toast.LENGTH_SHORT).show();
@@ -116,11 +124,12 @@ public class CarolFragment extends Fragment {
         });
 
         decreaseFab.setOnClickListener(v -> {
+            size = sharedPreferences.getFloat("scaleSize", size);
             if (size > 14) {
                 size--;
                 carolText.setTextSize(size);
                 editor = sharedPreferences.edit();
-                editor.putFloat("size", size).apply();
+                editor.putFloat("scaleSize", size).apply();
             } else {
                 Toast.makeText(requireContext(), R.string.toast_too_small, Toast.LENGTH_SHORT).show();
             }
@@ -171,5 +180,21 @@ public class CarolFragment extends Fragment {
             restoreFab.setClickable(false);
             decreaseFab.setClickable(false);
         }
+    }
+
+    private void sizeChanger() {
+        if (sharedPreferences.getBoolean("scaleChanged", false)) {
+            carolText.setTextSize(sharedPreferences.getFloat("scaleSize", 18));
+        }
+
+        float size;
+        if (sharedPreferences.getBoolean("scaleLarge", false)) {
+            size = 20;
+        } else {
+            size = 15;
+        }
+        increaseFab.setTextSize(size);
+        restoreFab.setTextSize(size);
+        decreaseFab.setTextSize(size);
     }
 }

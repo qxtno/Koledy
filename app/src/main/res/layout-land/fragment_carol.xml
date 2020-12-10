@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -11,18 +11,21 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:layout_margin="10dp"
+        android:layout_marginEnd="14dp"
+        android:layout_marginBottom="18dp"
         android:clickable="true"
         android:contentDescription="@string/size"
         android:focusable="true"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:srcCompat="@drawable/ic_size" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/decrease_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/font_size_fab"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
         android:clickable="true"
         android:contentDescription="@string/decrease"
         android:focusable="true"
@@ -30,15 +33,14 @@
         android:textSize="15sp"
         android:visibility="gone"
         app:backgroundTint="@color/red"
-        app:icon="@drawable/ic_remove" />
+        app:icon="@drawable/ic_remove"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/font_size_fab" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/restore_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/decrease_fab"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:contentDescription="@string/restore"
@@ -47,15 +49,14 @@
         android:textSize="15sp"
         android:visibility="gone"
         app:backgroundTint="@color/blue"
-        app:icon="@drawable/ic_restore" />
+        app:icon="@drawable/ic_restore"
+        app:layout_constraintBottom_toTopOf="@+id/decrease_fab"
+        app:layout_constraintEnd_toStartOf="@+id/font_size_fab" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/increase_fab"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_above="@+id/restore_fab"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="20dp"
         android:layout_marginBottom="20dp"
         android:clickable="true"
         android:contentDescription="@string/increase"
@@ -64,11 +65,20 @@
         android:textSize="15sp"
         android:visibility="gone"
         app:backgroundTint="@color/green"
-        app:icon="@drawable/ic_add" />
+        app:icon="@drawable/ic_add"
+        app:layout_constraintBottom_toTopOf="@+id/restore_fab"
+        app:layout_constraintEnd_toStartOf="@+id/font_size_fab" />
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:id="@+id/scrollView2"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <TextView
             android:id="@+id/carol_text"
@@ -78,5 +88,5 @@
             android:text="" />
     </ScrollView>
 
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -11,7 +11,6 @@
         android:orientation="vertical"
         android:scrollbars="vertical">
 
-
         <RadioGroup
             android:id="@+id/radio_theme"
             android:layout_width="match_parent"
@@ -20,7 +19,7 @@
             tools:ignore="UselessParent">
 
             <TextView
-                android:id="@+id/themeText"
+                android:id="@+id/theme_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/theme"
@@ -31,20 +30,29 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:checked="true"
-                android:text="@string/theme_light" />
+                android:text="@string/theme_light"
+                android:textSize="15sp" />
 
             <RadioButton
                 android:id="@+id/radio_dark"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/theme_dark" />
+                android:text="@string/theme_dark"
+                android:textSize="15sp" />
 
             <RadioButton
                 android:id="@+id/radio_system"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/device_theme" />
+                android:text="@string/device_theme"
+                android:textSize="15sp" />
         </RadioGroup>
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/scale_switch"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/scale_large"
+            android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

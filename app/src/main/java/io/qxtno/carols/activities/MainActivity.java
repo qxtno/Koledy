@@ -13,7 +13,6 @@ import android.view.Menu;
 import io.qxtno.carols.R;
 
 public class MainActivity extends AppCompatActivity {
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

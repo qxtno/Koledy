@@ -2,21 +2,21 @@
     <string name="app_name">Kolędy</string>
     <string name="search">Szukaj</string>
     <string name="size">Rozmiar czcionki</string>
-    <string name="increase">Zwiększ rozmiar czcionki</string>
-    <string name="restore">Przywróć domyślny rozmiar</string>
-    <string name="decrease">Zmniejsz rozmiar czcionki</string>
+    <string name="increase">Powiększ</string>
+    <string name="restore">Przywróć</string>
+    <string name="decrease">Pomniejsz</string>
     <string name="close">Zamknij</string>
     <string name="settings">Ustawienia</string>
     <string name="carol">Kolęda</string>
     <string name="theme">Wybierz motyw</string>
     <string name="theme_light">Motyw jasny</string>
     <string name="theme_dark">Motyw ciemny</string>
-    <string name="device_theme">Użyj motywu systemowego</string>
+    <string name="device_theme">Używaj motywu systemowego</string>
+    <string name="scale_normal">Wyłącz tryb powiększony</string>
+    <string name="scale_large">Włącz tryb powiększony</string>
     <string name="toast_too_big">Nie można już zwiększyć rozmiaru czcionki</string>
     <string name="toast_too_small">Nie można już zmniejszyć rozmiaru czcionki</string>
     <string name="toast_reset_done">Przywrócono rozmiar czcionki</string>
     <string name="toast_size_unchanged">Czcionka już jest domyślnego rozmiaru</string>
-    <string name="toast_size_too_small">Rozmiar czcionki nie może być mniejszy niż 14</string>
-    <string name="toast_size_too_big">Rozmiar czcionki nie może być mniejszy niż 50</string>
     <string name="info">v1.0</string>
 </resources>

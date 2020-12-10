@@ -1,6 +1,7 @@
 package io.qxtno.carols.adapters;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +15,7 @@ import java.util.ArrayList;
 import io.qxtno.carols.R;
 import io.qxtno.carols.model.Carol;
 
-public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHolder>{
+public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHolder> {
 
     private final Context context;
     private final ArrayList<Carol> carols;
@@ -45,6 +46,13 @@ public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHol
     @Override
     public void onBindViewHolder(@NonNull CarolViewHolder holder, int position) {
         holder.title_text_view.setText(carols.get(position).getTitle());
+        sizeChanger(holder);
+    }
+
+    private void sizeChanger(CarolViewHolder holder) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("mode", Context.MODE_PRIVATE);
+        float size = sharedPreferences.getFloat("scaleSize", 18);
+        holder.title_text_view.setTextSize(size);
     }
 
     @Override
@@ -69,14 +77,15 @@ public class CarolAdapter extends RecyclerView.Adapter<CarolAdapter.CarolViewHol
             });
         }
     }
-    public void filter(String text){
+
+    public void filter(String text) {
         filteredList.clear();
-        if(text.isEmpty()){
+        if (text.isEmpty()) {
             filteredList.addAll(carolsBackup);
-        }else {
+        } else {
             text = text.toLowerCase();
-            for(Carol carol : carolsBackup){
-                if(carol.getTitle().toLowerCase().contains(text)){
+            for (Carol carol : carolsBackup) {
+                if (carol.getTitle().toLowerCase().contains(text)) {
                     filteredList.add(carol);
                 }
             }
