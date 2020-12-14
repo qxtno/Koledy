@@ -116,11 +116,13 @@ public class SettingsFragment extends Fragment {
             if (isChecked) {
                 editor.putFloat("scaleSize", 25)
                         .putBoolean("scaleLarge", true)
+                        .putFloat("size", 25)
                         .apply();
                 scaleSwitch.setText(R.string.scale_normal);
             } else {
                 editor.putFloat("scaleSize", 18)
                         .putBoolean("scaleLarge", false)
+                        .putFloat("size", 25)
                         .apply();
                 scaleSwitch.setText(R.string.scale_large);
             }
