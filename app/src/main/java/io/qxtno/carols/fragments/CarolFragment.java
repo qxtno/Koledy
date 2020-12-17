@@ -3,12 +3,16 @@ package io.qxtno.carols.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,6 +41,8 @@ public class CarolFragment extends Fragment {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private TextView carolText;
+    private ScrollView scrollView;
+    private int previousScrollY = 0;
 
     @Nullable
     @Override
@@ -47,6 +53,7 @@ public class CarolFragment extends Fragment {
         setHasOptionsMenu(true);
 
         carolText = view.findViewById(R.id.carol_text);
+        scrollView = view.findViewById(R.id.scroll_view);
 
         Bundle bundle = this.getArguments();
         assert bundle != null;
@@ -58,9 +65,9 @@ public class CarolFragment extends Fragment {
         sharedPreferences = requireActivity().getSharedPreferences("mode", Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
 
-        if(sharedPreferences.getBoolean("scaleChanged", false)){
-            size = sharedPreferences.getFloat("scaleSize",18);
-        }else{
+        if (sharedPreferences.getBoolean("scaleChanged", false)) {
+            size = sharedPreferences.getFloat("scaleSize", 18);
+        } else {
             size = sharedPreferences.getFloat("size", 18);
         }
         carolText.setTextSize(size);
@@ -140,7 +147,46 @@ public class CarolFragment extends Fragment {
             editor.putBoolean("scaleChanged", false).apply();
         });
 
+        carolText.setOnClickListener(v -> {
+            hideButtons();
+        });
+
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
+            @Override
+            public void onScrollChanged() {
+                if (scrollView.getScrollY() > 0) {
+                    hideAllButtons();
+                } else {
+                    showButtons();
+                }
+            }
+        });
+
         return view;
+    }
+
+    private void hideAllButtons() {
+        hideButtons();
+        sizeFab.setVisibility(View.GONE);
+        sizeFab.setClickable(false);
+    }
+
+    private void showButtons() {
+        sizeFab.setVisibility(View.VISIBLE);
+        sizeFab.setClickable(true);
+    }
+
+    private void hideButtons() {
+        if (toggleFloatingButtons) {
+            toggleFloatingButtons = false;
+            sizeFab.setImageResource(R.drawable.ic_size);
+            sizeFab.setContentDescription(getResources().getString(R.string.close));
+            increaseFab.setVisibility(View.GONE);
+            restoreFab.setVisibility(View.GONE);
+            decreaseFab.setVisibility(View.GONE);
+            animationIn();
+            setClickable(false);
+        }
     }
 
     private void bringToFront() {
@@ -157,6 +203,8 @@ public class CarolFragment extends Fragment {
         menu.findItem(R.id.menu_search).setVisible(false).collapseActionView();
         menu.findItem(R.id.menu_settings).setOnMenuItemClickListener(item -> {
             Navigation.findNavController(requireActivity(), R.id.nav_host_fragment).navigate(R.id.nav_settings);
+            hideButtons();
+
             return true;
         });
     }
