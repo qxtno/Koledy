@@ -18,10 +18,10 @@
     <string name="toast_too_big">Nie można już zwiększyć rozmiaru czcionki</string>
     <string name="toast_too_small">Nie można już zmniejszyć rozmiaru czcionki</string>
     <string name="toast_reset_done">Przywrócono rozmiar czcionki</string>
-    <string name="toast_size_unchanged">Czcionka już jest domyślnego rozmiaru</string>
+    <string name="toast_size_unchanged">Czcionka jest już domyślnego rozmiaru</string>
     <string name="slide_1_desc">Aplikacja Kolędy zawiera teksty do najpopularniejszych kolęd.</string>
-    <string name="slide_2_desc">Po wybraniu kolędy z listy można zmienić rozmiar wyświetlanego tekstu ciągle mając go na oku.</string>
-    <string name="slide_3_desc">Aby ułatwić widoczność tekstu zarówno kolęd, jak i listy kolęd można wybrać tryb powiększony, który znajduje się w ustawieniach.</string>
+    <string name="slide_2_desc">Po wybraniu kolędy z listy można zmienić rozmiar wyświetlanego tekstu, ciągle mając go na oku.</string>
+    <string name="slide_3_desc">Aby ułatwić widoczność zarówno tekstu jak i listy kolęd można wybrać tryb powiększony, znajdujący się w ustawieniach.</string>
     <string name="slide_text_size">Rozmiar tekstu</string>
     <string name="slide_scale">Tryb powiększony</string>
     <string name="info">v1.0</string>
