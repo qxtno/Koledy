@@ -7,9 +7,6 @@ public class Carol implements Parcelable {
     public String title;
     public String carol_text;
 
-    public Carol() {
-    }
-
     public Carol(String title, String carol_text) {
         this.title = title;
         this.carol_text = carol_text;

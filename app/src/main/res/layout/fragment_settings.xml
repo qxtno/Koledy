@@ -52,7 +52,26 @@
             android:id="@+id/scale_switch"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="10dp"
             android:text="@string/scale_large"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/suggestions_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="@string/suggestion"
+            android:textSize="15sp" />
+
+        <TextView
+            android:id="@+id/info_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/info"
             android:textSize="15sp" />
     </LinearLayout>
 </ScrollView>

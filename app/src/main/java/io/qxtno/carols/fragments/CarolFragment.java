@@ -3,13 +3,10 @@ package io.qxtno.carols.fragments;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ScrollView;
@@ -42,7 +39,6 @@ public class CarolFragment extends Fragment {
     private SharedPreferences.Editor editor;
     private TextView carolText;
     private ScrollView scrollView;
-    private int previousScrollY = 0;
 
     @Nullable
     @Override
@@ -147,18 +143,13 @@ public class CarolFragment extends Fragment {
             editor.putBoolean("scaleChanged", false).apply();
         });
 
-        carolText.setOnClickListener(v -> {
-            hideButtons();
-        });
+        carolText.setOnClickListener(v -> hideButtons());
 
-        scrollView.getViewTreeObserver().addOnScrollChangedListener(new ViewTreeObserver.OnScrollChangedListener() {
-            @Override
-            public void onScrollChanged() {
-                if (scrollView.getScrollY() > 0) {
-                    hideAllButtons();
-                } else {
-                    showButtons();
-                }
+        scrollView.getViewTreeObserver().addOnScrollChangedListener(() -> {
+            if (scrollView.getScrollY() > 0) {
+                hideAllButtons();
+            } else {
+                showButtons();
             }
         });
 

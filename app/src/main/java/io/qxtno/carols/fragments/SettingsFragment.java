@@ -2,7 +2,9 @@ package io.qxtno.carols.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -29,6 +31,8 @@ public class SettingsFragment extends Fragment {
     private RadioButton systemRadio;
     private SwitchMaterial scaleSwitch;
     private TextView themeText;
+    private TextView suggestionText;
+    private TextView infoText;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
@@ -43,6 +47,8 @@ public class SettingsFragment extends Fragment {
         systemRadio = view.findViewById(R.id.radio_system);
         scaleSwitch = view.findViewById(R.id.scale_switch);
         themeText = view.findViewById(R.id.theme_text);
+        suggestionText = view.findViewById(R.id.suggestions_text_view);
+        infoText = view.findViewById(R.id.info_text_view);
 
         sharedPreferences = requireActivity().getSharedPreferences("mode", Context.MODE_PRIVATE);
 
@@ -51,6 +57,14 @@ public class SettingsFragment extends Fragment {
         sizeChanger();
 
         setHasOptionsMenu(true);
+
+        suggestionText.setOnClickListener(v -> {
+            String subject = "Sugestia dotycząca aplikacji " + getResources().getString(R.string.app_name);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            Uri data = Uri.parse("mailto:qxtno@outlook.com?subject=" + Uri.encode(subject));
+            intent.setData(data);
+            startActivity(intent);
+        });
 
         return view;
     }
@@ -122,7 +136,7 @@ public class SettingsFragment extends Fragment {
             } else {
                 editor.putFloat("scaleSize", 18)
                         .putBoolean("scaleLarge", false)
-                        .putFloat("size", 25)
+                        .putFloat("size", 18)
                         .apply();
                 scaleSwitch.setText(R.string.scale_large);
             }
@@ -143,5 +157,7 @@ public class SettingsFragment extends Fragment {
         darkRadio.setTextSize(size);
         systemRadio.setTextSize(size);
         scaleSwitch.setTextSize(size);
+        suggestionText.setTextSize(size);
+        infoText.setTextSize(size);
     }
 }

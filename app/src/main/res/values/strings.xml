@@ -24,5 +24,6 @@
     <string name="slide_3_desc">Aby ułatwić widoczność zarówno tekstu jak i listy kolęd można wybrać tryb powiększony, znajdujący się w ustawieniach.</string>
     <string name="slide_text_size">Rozmiar tekstu</string>
     <string name="slide_scale">Tryb powiększony</string>
+    <string name="suggestion">Masz sugestię, albo widzsz błąd?\n<u>Daj mi znać!</u></string>
     <string name="info">v1.0</string>
 </resources>
