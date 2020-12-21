@@ -25,5 +25,5 @@
     <string name="slide_text_size">Rozmiar tekstu</string>
     <string name="slide_scale">Tryb powiększony</string>
     <string name="suggestion">Masz sugestię, albo widzsz błąd?\n<u>Daj mi znać!</u></string>
-    <string name="info">v1.0</string>
+    <string name="info">v1.0.1</string>
 </resources>
